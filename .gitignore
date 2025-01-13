@@ -1,0 +1,52 @@
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Distribution / packaging
+.eggs/
+dist/
+build/
+sdist/
+*.egg-info/
+*.whl
+
+# Environments
+.venv/
+env/
+venv/
+ENV/
+
+# PyInstaller
+*.manifest
+*.spec
+
+# Translations
+*.mo
+
+# Django stuff:
+*.sqlite3
+*.db
+local_settings.py
+
+# Static and media files
+# static/
+# media/
+
+# Log files
+*.log
+*.out
+
+# OS or Editor Folders
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
+*.orig
+*~
+*.swp
+
+# Other
+.pytest_cache/
+.coverage
+.env
