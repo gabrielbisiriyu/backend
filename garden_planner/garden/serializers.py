@@ -44,6 +44,6 @@ class GardenPlantSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = GardenPlant
-        fields = ['id', 'plant', 'garden', 'quantity', 'planting_date', 'notes']
-
+        #fields = ['id', 'plant', 'garden', 'quantity', 'planting_date', 'notes']
+        fields = ['id', 'plant', 'garden', 'quantity', 'planting_date']
 

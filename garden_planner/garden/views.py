@@ -58,8 +58,8 @@ class GardenPlantViewSet(viewsets.ModelViewSet):
         serializer.save(garden=garden, plant=plant, planting_date=date.today())
 
     # Action to remove a plant from the user's garden
-    @action(detail=True, methods=['delete'], url_path='remove-plant')
-    def remove_plant(self, request, pk=None):
-        garden_plant = get_object_or_404(GardenPlant, pk=pk, garden__user=request.user)
-        garden_plant.delete()
-        return Response(status=204)
+#    @action(detail=True, methods=['delete'], url_path='remove-plant')
+#    def remove_plant(self, request, pk=None):
+#        garden_plant = get_object_or_404(GardenPlant, pk=pk, garden__user=request.user)
+#        garden_plant.delete()
+#        return Response(status=204)
