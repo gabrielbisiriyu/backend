@@ -1,6 +1,6 @@
 from django.contrib.auth.models import User
 from rest_framework import serializers
-from .models import Plant, Garden, GardenPlant
+from .models import Plant, Garden, GardenPlant, WateringSchedule
 
 
 class UserSerializer(serializers.ModelSerializer):
@@ -25,10 +25,12 @@ class UserSerializer(serializers.ModelSerializer):
 class PlantSerializer(serializers.ModelSerializer):
     class Meta:
         model = Plant
-        fields = '__all__'
+        #fields = '__all__' 
+        fields =  ['id', 'name', "plant_type","image", "sunlight", "soil","water_frequency","fertilizer_instructions","pruning_instructions"  ]        
 
 
 class GardenSerializer(serializers.ModelSerializer):
+
     class Meta:
         model = Garden
         fields =  ['id', 'name']
@@ -39,11 +41,32 @@ class GardenPlantSerializer(serializers.ModelSerializer):
     #garden = GardenSerializer()
     garden = serializers.PrimaryKeyRelatedField(queryset=Garden.objects.all())
     plant = serializers.PrimaryKeyRelatedField(queryset=Plant.objects.all()) 
-
+    watering_schedule = serializers.SerializerMethodField()
 
 
     class Meta:
         model = GardenPlant
         #fields = ['id', 'plant', 'garden', 'quantity', 'planting_date', 'notes']
-        fields = ['id', 'plant', 'garden', 'quantity', 'planting_date']
+        fields = ['id', 'plant', 'garden', 'quantity', 'planting_date', 'watering_schedule']
+
+    def get_watering_schedule(self, obj):
+        schedule = WateringSchedule.objects.filter(garden_plant=obj).first()
+        if schedule:
+            return {
+                'next_watering_date': schedule.next_watering_date,
+                'frequency_in_days': schedule.frequency_in_days,
+                'last_watered_date': schedule.last_watered_date,
+            }
+        return None
+
+    def create(self, validated_data):
+        garden_plant = super().create(validated_data)
+        return garden_plant
+
+
+class WateringScheduleSerializer(serializers.ModelSerializer):
+    
+    class Meta:
+        model = WateringSchedule
+        fields = ['id', 'garden_plant', 'frequency_in_days', 'next_watering_date', 'last_watered_date'] 
 

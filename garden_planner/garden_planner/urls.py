@@ -3,7 +3,7 @@ from django.urls import path, include
 from garden.views import CreateUserView
 from rest_framework_simplejwt.views import TokenObtainPairView, TokenRefreshView
 from django.contrib.auth import views as auth_views 
-from garden.views import PlantViewSet, GardenViewSet, GardenPlantViewSet
+from garden.views import PlantViewSet, GardenViewSet, GardenPlantViewSet, WateringScheduleViewSet
 from rest_framework.routers import DefaultRouter  
 
 
@@ -12,7 +12,7 @@ router = DefaultRouter()
 router.register(r'plants', PlantViewSet, basename='plant')  # Register PlantViewSet for handling plants
 router.register(r'garden', GardenViewSet, basename='garden')  # Register GardenViewSet for handling gardens
 router.register(r'garden-plants', GardenPlantViewSet, basename='garden-plant')  # Register GardenPlantViewSet for garden-plant relationships
-
+router.register(r'watering-schedules', WateringScheduleViewSet, basename='watering-schedule')
 
 
 

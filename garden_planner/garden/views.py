@@ -1,8 +1,8 @@
 from django.shortcuts import render
 from django.contrib.auth.models import User 
-from .models import Plant, Garden, GardenPlant
+from .models import Plant, Garden, GardenPlant, WateringSchedule
 from rest_framework import generics, viewsets
-from .serializers import UserSerializer, PlantSerializer, GardenPlantSerializer, GardenSerializer
+from .serializers import UserSerializer, PlantSerializer, GardenPlantSerializer, GardenSerializer, WateringScheduleSerializer
 from rest_framework.permissions import IsAuthenticated, AllowAny 
 from rest_framework.response import Response
 from rest_framework.decorators import action
@@ -63,3 +63,14 @@ class GardenPlantViewSet(viewsets.ModelViewSet):
 #        garden_plant = get_object_or_404(GardenPlant, pk=pk, garden__user=request.user)
 #        garden_plant.delete()
 #        return Response(status=204)
+
+
+class WateringScheduleViewSet(viewsets.ModelViewSet):
+    queryset = WateringSchedule.objects.all()
+    serializer_class = WateringScheduleSerializer
+    permission_classes = [IsAuthenticated]
+
+    def get_queryset(self):
+        # Ensure users can only see watering schedules for their own garden plants
+        return WateringSchedule.objects.filter(garden_plant__garden__user=self.request.user)  
+    
