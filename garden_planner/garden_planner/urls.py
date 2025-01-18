@@ -12,7 +12,8 @@ router = DefaultRouter()
 router.register(r'plants', PlantViewSet, basename='plant')  # Register PlantViewSet for handling plants
 router.register(r'garden', GardenViewSet, basename='garden')  # Register GardenViewSet for handling gardens
 router.register(r'garden-plants', GardenPlantViewSet, basename='garden-plant')  # Register GardenPlantViewSet for garden-plant relationships
-router.register(r'watering-schedules', WateringScheduleViewSet, basename='watering-schedule')
+router.register(r'watering-schedules', WateringScheduleViewSet, basename='watering-schedule') #use the url/pk/ to update the water schedule form
+
 
 
 

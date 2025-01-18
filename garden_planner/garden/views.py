@@ -7,7 +7,8 @@ from rest_framework.permissions import IsAuthenticated, AllowAny
 from rest_framework.response import Response
 from rest_framework.decorators import action
 from django.shortcuts import get_object_or_404 
-from datetime import date
+from datetime import date 
+from rest_framework.filters import SearchFilter
 # Create your views here.
 
 
@@ -23,6 +24,8 @@ class PlantViewSet(viewsets.ReadOnlyModelViewSet):  # Making it read-only as use
     queryset = Plant.objects.all()
     serializer_class = PlantSerializer
     permission_classes = [IsAuthenticated]  # Only authenticated users can access   
+    filter_backends = [SearchFilter]  # Add search functionality
+    search_fields = ['name']  # Specify fields to search (assuming 'name' is the plant name field)
 
 
 # View for managing Gardens
@@ -57,12 +60,7 @@ class GardenPlantViewSet(viewsets.ModelViewSet):
         # Automatically set planting_date to today's date
         serializer.save(garden=garden, plant=plant, planting_date=date.today())
 
-    # Action to remove a plant from the user's garden
-#    @action(detail=True, methods=['delete'], url_path='remove-plant')
-#    def remove_plant(self, request, pk=None):
-#        garden_plant = get_object_or_404(GardenPlant, pk=pk, garden__user=request.user)
-#        garden_plant.delete()
-#        return Response(status=204)
+
 
 
 class WateringScheduleViewSet(viewsets.ModelViewSet):

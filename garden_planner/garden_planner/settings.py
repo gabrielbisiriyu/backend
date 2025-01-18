@@ -34,6 +34,11 @@ REST_FRAMEWORK = {
     ),
     "DEFAULT_PERMISSION_CLASSES": [
         "rest_framework.permissions.IsAuthenticated",
+    ],   
+     'DEFAULT_FILTER_BACKENDS': [
+        'django_filters.rest_framework.DjangoFilterBackend',
+        'rest_framework.filters.SearchFilter',
+        'rest_framework.filters.OrderingFilter',
     ],
 }
 
@@ -55,6 +60,7 @@ INSTALLED_APPS = [
     "garden",
     "rest_framework",
     "corsheaders",
+    'django_filters',
 
 ]
 
