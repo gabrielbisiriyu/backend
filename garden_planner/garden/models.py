@@ -1,6 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import User
-from datetime import timedelta
+from datetime import timedelta, date
 
 # Create your models here.
 
@@ -18,12 +18,12 @@ class Plant(models.Model):
     sunlight = models.CharField(max_length=50, choices=SUNLIGHT_CHOICES)
     soil = models.CharField(max_length=500)
     water_frequency = models.IntegerField(help_text="Number of days per week")
-    # Care instructions  
-    fertilizer_instructions = models.TextField()
-    pruning_instructions = models.TextField()
-    
-    created_at = models.DateTimeField(auto_now_add=True)
-    updated_at = models.DateTimeField(auto_now=True)
+    #fertilizer_instructions = models.TextField()
+    #pruning_instructions = models.TextField()
+    maintenance_task = models.TextField(blank=True, help_text="Maintenance tasks for the plant (e.g., pruning, fertilizing).")
+    number_of_days_to_Harvest = models.IntegerField(null=True, blank=True, help_text="Expected days harvest")
+    #created_at = models.DateTimeField(auto_now_add=True)
+    #updated_at = models.DateTimeField(auto_now=True)
     
     def __str__(self):
         return self.name  
@@ -41,13 +41,33 @@ class GardenPlant(models.Model):
     plant = models.ForeignKey(Plant, on_delete=models.CASCADE)  # Assuming Plant is in a separate app named 'plants'
     quantity = models.IntegerField(default=1)
     planting_date = models.DateField(null=True, blank=True)
+    harvest_due_date = models.DateField(null=True, blank=True)  # Auto-calculated based on planting_date and number_of_days_to_Harvest
+    growth_stage = models.CharField(max_length=50, choices=[('SEEDLING', 'Seedling'), ('VEGETATIVE', 'Vegetative'), ('FLOWERING', 'Flowering'), ('FRUITING', 'Fruiting')], blank=True, null=True)
 
     class Meta:
         unique_together = ('garden', 'plant')
 
     def save(self, *args, **kwargs):
         # Call the original save method
+        # Automatically calculate harvest_due_date
+        if self.planting_date and self.plant.number_of_days_to_Harvest:
+            self.harvest_due_date = self.planting_date + timedelta(days=self.plant.number_of_days_to_Harvest)   
+
+        # Optionally set growth_stage based on plant age (assuming average growth timeline)
+        if self.planting_date:
+            days_since_planting = (date.today() - self.planting_date).days
+            if days_since_planting <= (self.plant.number_of_days_to_Harvest)*0.15:
+                self.growth_stage = 'SEEDLING'
+            elif days_since_planting <= (self.plant.number_of_days_to_Harvest)*0.45:
+                self.growth_stage = 'VEGETATIVE'
+            elif days_since_planting <= (self.plant.number_of_days_to_Harvest)*0.78:
+                self.growth_stage = 'FLOWERING'
+            else:
+                self.growth_stage = 'FRUITING'   
         super().save(*args, **kwargs)
+
+
+            #super().save(*args, **kwargs)
 
         # Check if a watering schedule already exists for this garden plant
         if not WateringSchedule.objects.filter(garden_plant=self).exists():
@@ -79,3 +99,15 @@ class WateringSchedule(models.Model):
     def __str__(self):
         return f"Watering Schedule for {self.garden_plant.plant.name} in {self.garden_plant.garden.name}"
         
+
+
+
+class Notification(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='notifications')
+    message = models.TextField()
+    is_read = models.BooleanField(default=False)
+    task_type = models.CharField(max_length=20, choices=[('WATERING', 'Watering'), ('MAINTENANCE', 'Maintenance')], blank=True, null=True)
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return f"Notification for {self.user.username}"

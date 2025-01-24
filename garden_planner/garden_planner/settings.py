@@ -43,8 +43,10 @@ REST_FRAMEWORK = {
 }
 
 SIMPLE_JWT = {
-    "ACCESS_TOKEN_LIFETIME": timedelta(minutes=30),
+    "ACCESS_TOKEN_LIFETIME": timedelta(minutes=30),   # REMEMBER TO CHANGE THIS TO 5 MINUTES
     "REFRESH_TOKEN_LIFETIME": timedelta(days=1),
+    'ROTATE_REFRESH_TOKENS': True,
+    'BLACKLIST_AFTER_ROTATION': True,  # Ensures that old tokens are blacklisted    
 }  
 
 
@@ -61,6 +63,8 @@ INSTALLED_APPS = [
     "rest_framework",
     "corsheaders",
     'django_filters',
+    "celery",
+    'rest_framework_simplejwt.token_blacklist',
 
 ]
 
@@ -155,4 +159,41 @@ DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 CORS_ALLOW_ALL_ORIGINS = True
 CORS_ALLOWS_CREDENTIALS = True
 #LOGOUT_REDIRECT_URL = 'login'  
-#LOGIN_URL = 'login' 
+#LOGIN_URL = 'login'    
+
+#CELERY_BROKER_URL = 'redis://localhost:6379/0'
+
+CELERY_BROKER_URL = 'redis://172.18.80.114:6379/0'
+CELERY_ACCEPT_CONTENT = ['json']
+CELERY_TASK_SERIALIZER = 'json'  
+
+#EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'  # Prints emails to console for testing
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_HOST_USER = 'guyex1996@gmail.com'
+EMAIL_HOST_PASSWORD = 'vfopxgcdykhbuwyp'
+EMAIL_PORT = 587
+EMAIL_USE_TLS = True
+EMAIL_USE_SSL = False
+DEFAULT_FROM_EMAIL = 'noreply@mail.com'  # Use your full Gmail address 
+
+
+# Logging Configuration
+LOGGING = {
+    'version': 1,
+    'disable_existing_loggers': False,
+    'handlers': {
+        'file': {
+            'level': 'ERROR',
+            'class': 'logging.FileHandler',
+            'filename': 'django_errors.log',
+        },
+    },
+    'loggers': {
+        '': {  # Root logger
+            'handlers': ['file'],
+            'level': 'ERROR',
+            'propagate': True,
+        },
+    },
+}
