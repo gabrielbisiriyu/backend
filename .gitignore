@@ -26,8 +26,7 @@ data.json
 *.mo
 
 # Django stuff:
-*.sqlite3
-*.db
+
 local_settings.py
 
 
