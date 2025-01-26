@@ -12,7 +12,8 @@ https://docs.djangoproject.com/en/5.1/ref/settings/
 
 from pathlib import Path
 from datetime import timedelta
-from dotenv import load_dotenv
+from dotenv import load_dotenv  
+from decouple import config
 import os
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -25,7 +26,7 @@ MEDIA_DIR = Path.joinpath(BASE_DIR,"media")
 SECRET_KEY = "django-insecure-6)v@v-n!y0rps5)2w++nqd2t2godi4%u^!8l7#3f_poiacjg)%"
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 ALLOWED_HOSTS = ["*"]
 
 REST_FRAMEWORK = {
@@ -70,6 +71,7 @@ INSTALLED_APPS = [
 
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
+    "whitenoise.middleware.WhiteNoiseMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
     "django.middleware.common.CommonMiddleware",
     "django.middleware.csrf.CsrfViewMiddleware",
@@ -104,6 +106,7 @@ WSGI_APPLICATION = "garden_planner.wsgi.application"
 # Database
 # https://docs.djangoproject.com/en/5.1/ref/settings/#databases
 
+'''   
 DATABASES = {
     "default": {
         "ENGINE": "django.db.backends.sqlite3",
@@ -111,6 +114,16 @@ DATABASES = {
     }
 }
 
+'''
+
+import dj_database_url 
+
+DATABASES = {
+    "default" : dj_database_url.parse(config("DATABASE_URL"))
+}
+
+
+   
 
 # Password validation
 # https://docs.djangoproject.com/en/5.1/ref/settings/#auth-password-validators
@@ -171,7 +184,7 @@ CELERY_TASK_SERIALIZER = 'json'
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_HOST_USER = 'guyex1996@gmail.com'
-EMAIL_HOST_PASSWORD = 'vfopxgcdykhbuwyp'
+EMAIL_HOST_PASSWORD = config("EMAIL_HOST_PASSWORD")
 EMAIL_PORT = 587
 EMAIL_USE_TLS = True
 EMAIL_USE_SSL = False

@@ -3,7 +3,7 @@ from django.dispatch import receiver
 from django.utils.timezone import now
 from .models import WateringSchedule, Notification,GardenPlant, Plant
 from django.core.mail import send_mail
-from datetime import timedelta
+from datetime import timedelta, timezone
 import threading
 import logging   
 
@@ -124,7 +124,8 @@ def update_related_fields_on_plant_change(sender, instance, created, **kwargs):
             else:
                 # Use today as a fallback if last_watered_date is not set
                 schedule.next_watering_date = schedule.garden_plant.planting_date + timedelta(days=instance.water_frequency)
-            schedule.save()  # Save the updated watering schedule   
+            schedule.save()  # Save the updated watering schedule    
+
 
 
 

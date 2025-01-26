@@ -97,28 +97,33 @@ class WateringScheduleViewSet(viewsets.ModelViewSet):
         schedule.last_watered_date = date.today()
         schedule.save()
 
-        # Create notification for completed watering
-        #garden_plant = schedule.garden_plant
-        #Notification.objects.create(
-        #    user=garden_plant.garden.user,
-          #  message=f"{garden_plant.plant.name} has been watered.",
-         #   task_type='WATERING',
-        #)
         return Response({"message": f"{schedule.garden_plant.plant.name} has been watered."})   
 
  
-
-
- 
-    
 
 class NotificationsAPIView(APIView):
     permission_classes = [IsAuthenticated]
 
     def get(self, request):
         """
-        Fetch unread notifications for the logged-in user.
+        Fetch notifications for the logged-in user. 
+        Optionally, fetch a specific notification by ID.
         """
+        notification_id = request.query_params.get("id")
+        if notification_id:
+            # Fetch a specific notification
+            notification = request.user.notifications.filter(id=notification_id).first()
+            if notification:
+                data = {
+                    "id": notification.id,
+                    "message": notification.message,
+                    "is_read": notification.is_read,
+                    "created_at": notification.created_at,
+                }
+                return Response(data)
+            return Response({"error": "Notification not found."}, status=404)
+        
+        # Fetch all unread notifications if no ID is provided
         notifications = request.user.notifications.filter(is_read=False)
         data = [
             {
@@ -131,14 +136,4 @@ class NotificationsAPIView(APIView):
         ]
         return Response(data)
 
-    def post(self, request):
-        """
-        Mark a notification as read.
-        """
-        notification_id = request.data.get("id")
-        notification = Notification.objects.filter(id=notification_id, user=request.user).first()
-        if notification:
-            notification.is_read = True
-            notification.save()
-            return Response({"message": "Notification marked as read."})
-        return Response({"error": "Notification not found."}, status=404)
+

@@ -16,6 +16,7 @@ sdist/
 env/
 venv/
 ENV/
+data.json
 
 # PyInstaller
 *.manifest
@@ -29,6 +30,7 @@ ENV/
 *.db
 local_settings.py
 
+
 # Static and media files
 # static/
 # media/
@@ -36,6 +38,7 @@ local_settings.py
 # Log files
 *.log
 *.out
+
 
 # OS or Editor Folders
 .DS_Store
@@ -46,7 +49,10 @@ Thumbs.db
 *~
 *.swp
 
+
 # Other
 .pytest_cache/
 .coverage
-.env
+.env  
+data.json 
+data2.json   

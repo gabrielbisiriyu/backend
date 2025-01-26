@@ -1,15 +1,14 @@
 from django.db import models
 from django.contrib.auth.models import User
-from datetime import timedelta, date
+from datetime import timedelta, date, timezone, datetime
 
 # Create your models here.
 
 class Plant(models.Model):
     name = models.CharField(max_length=200)
     plant_type = models.CharField(max_length=100)
-    image = models.ImageField(upload_to='plant_image/', null=True, blank=True)
+    #image = models.ImageField(upload_to='plant_image/', null=True, blank=True)
     
-    # Growing requirements
     SUNLIGHT_CHOICES = [
         ('LOW', 'Low Light'),
         ('MEDIUM', 'Medium Light'),
@@ -18,12 +17,9 @@ class Plant(models.Model):
     sunlight = models.CharField(max_length=50, choices=SUNLIGHT_CHOICES)
     soil = models.CharField(max_length=500)
     water_frequency = models.IntegerField(help_text="Number of days per week")
-    #fertilizer_instructions = models.TextField()
-    #pruning_instructions = models.TextField()
     maintenance_task = models.TextField(blank=True, help_text="Maintenance tasks for the plant (e.g., pruning, fertilizing).")
     number_of_days_to_Harvest = models.IntegerField(null=True, blank=True, help_text="Expected days harvest")
-    #created_at = models.DateTimeField(auto_now_add=True)
-    #updated_at = models.DateTimeField(auto_now=True)
+
     
     def __str__(self):
         return self.name  
@@ -101,13 +97,15 @@ class WateringSchedule(models.Model):
         
 
 
-
 class Notification(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='notifications')
     message = models.TextField()
     is_read = models.BooleanField(default=False)
-    task_type = models.CharField(max_length=20, choices=[('WATERING', 'Watering'), ('MAINTENANCE', 'Maintenance')], blank=True, null=True)
+    #task_type = models.CharField(max_length=20, choices=[('WATERING', 'Watering'), ('MAINTENANCE', 'Maintenance')], blank=True, null=True)
     created_at = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
         return f"Notification for {self.user.username}"
+    
+
+

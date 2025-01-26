@@ -41,14 +41,8 @@ class PlantSerializer(serializers.ModelSerializer):
     class Meta:
         model = Plant
         #fields = '__all__' 
-        fields =  ['id', 'name', "plant_type","image", "sunlight", "soil","water_frequency","fertilizer_instructions","pruning_instructions"  ]        
+        fields =  ['id', 'name', "plant_type","image", "sunlight", "soil","water_frequency","maintenance_task","number_of_days_to_Harvest"  ]        
 
-
-class GardenSerializer(serializers.ModelSerializer):
-
-    class Meta:
-        model = Garden
-        fields =  ['id', 'name']
 
 
 class GardenPlantSerializer(serializers.ModelSerializer):
@@ -66,7 +60,6 @@ class GardenPlantSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = GardenPlant
-        #fields = ['id', 'plant', 'garden', 'quantity', 'planting_date']
         fields = ['id', 'plant', 'garden', 'quantity', 'planting_date', 'watering_schedule']
 
     def get_watering_schedule(self, obj):
@@ -83,10 +76,19 @@ class GardenPlantSerializer(serializers.ModelSerializer):
         garden_plant = super().create(validated_data)
         return garden_plant
 
+class GardenSerializer(serializers.ModelSerializer):
+    gardenplants = GardenPlantSerializer(source='gardenplant_set', many=True, read_only=True)  # Nested serializer for GardenPlant
+    class Meta:
+        model = Garden
+        fields =  ['id', 'name','gardenplants']
+
+
 
 class WateringScheduleSerializer(serializers.ModelSerializer):
     
     class Meta:
         model = WateringSchedule
-        fields = ['id', 'garden_plant', 'frequency_in_days', 'next_watering_date', 'last_watered_date'] 
+        fields = ['id', 'garden_plant', 'frequency_in_days', 'next_watering_date', 'last_watered_date']  
+
+
 
