@@ -25,7 +25,7 @@ urlpatterns = [
     path("api/register/", CreateUserView.as_view(), name="register"),
     path("api/token/", TokenObtainPairView.as_view(), name="get_token"),
     #path("logout/", auth_views.LogoutView.as_view(), name="logout"),
-    path("api/tokenrefresh", TokenRefreshView.as_view(), name="refresh"),
+    path("api/token/refresh/", TokenRefreshView.as_view(), name="refresh"),
     path("api-auth/", include("rest_framework.urls")),
     path("api/logout/", LogoutView.as_view(), name="logout"),
     path("api/notifications/", NotificationsAPIView.as_view(), name="notifications"),

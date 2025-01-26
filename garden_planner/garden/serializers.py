@@ -51,6 +51,10 @@ class GardenPlantSerializer(serializers.ModelSerializer):
     garden = serializers.PrimaryKeyRelatedField(queryset=Garden.objects.all())
     plant = serializers.PrimaryKeyRelatedField(queryset=Plant.objects.all()) 
     watering_schedule = serializers.SerializerMethodField()
+    # Include human-readable names for plant and garden
+    plant_name = serializers.ReadOnlyField(source='plant.name')  # Plant name
+    garden_name = serializers.ReadOnlyField(source='garden.name')  # Garden name
+
 
     # Auto-generate `quantity` (default to 1)
     quantity = serializers.IntegerField(required=False, default=1)
@@ -60,7 +64,7 @@ class GardenPlantSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = GardenPlant
-        fields = ['id', 'plant', 'garden', 'quantity', 'planting_date', 'watering_schedule']
+        fields = ['id', 'plant','plant_name', 'garden','garden_name', 'quantity', 'planting_date', 'watering_schedule']
 
     def get_watering_schedule(self, obj):
         schedule = WateringSchedule.objects.filter(garden_plant=obj).first()

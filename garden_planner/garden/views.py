@@ -12,6 +12,7 @@ from rest_framework.filters import SearchFilter
 from rest_framework_simplejwt.tokens import RefreshToken
 from rest_framework.views import APIView
 from rest_framework import status
+from rest_framework.exceptions import ValidationError
 # Create your views here.
 
 
@@ -75,6 +76,9 @@ class GardenPlantViewSet(viewsets.ModelViewSet):
         # Automatically associate the garden with the logged-in user
         garden = self.request.user.gardens.get(id=self.request.data['garden'])
         plant = get_object_or_404(Plant, id=self.request.data['plant'])  # Only valid plants can be added
+        # Check if the plant already exists in the garden
+        if GardenPlant.objects.filter(garden=garden, plant=plant).exists():
+            raise ValidationError(f"The plant '{plant.name}' is already in the garden '{garden.name}'.")
         #serializer.save(garden=garden, plant=plant)
         # Automatically set planting_date to today's date
         serializer.save(garden=garden, plant=plant, planting_date=date.today())
