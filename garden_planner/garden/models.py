@@ -7,7 +7,7 @@ from datetime import timedelta, date, timezone, datetime
 class Plant(models.Model):
     name = models.CharField(max_length=200)
     plant_type = models.CharField(max_length=100)
-    #image = models.ImageField(upload_to='plant_image/', null=True, blank=True)
+    image = models.ImageField(upload_to='plant_image/', null=True, blank=True)
     
     SUNLIGHT_CHOICES = [
         ('LOW', 'Low Light'),

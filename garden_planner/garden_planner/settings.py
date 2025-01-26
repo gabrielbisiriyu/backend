@@ -26,7 +26,7 @@ MEDIA_DIR = Path.joinpath(BASE_DIR,"media")
 SECRET_KEY = "django-insecure-6)v@v-n!y0rps5)2w++nqd2t2godi4%u^!8l7#3f_poiacjg)%"
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 ALLOWED_HOSTS = ["*"]
 
 REST_FRAMEWORK = {
@@ -106,7 +106,7 @@ WSGI_APPLICATION = "garden_planner.wsgi.application"
 # Database
 # https://docs.djangoproject.com/en/5.1/ref/settings/#databases
 
- 
+'''  
 DATABASES = {
     "default": {
         "ENGINE": "django.db.backends.sqlite3",
@@ -123,7 +123,7 @@ DATABASES = {
     "default" : dj_database_url.parse(config("DATABASE_URL"))
 }
 
-'''  
+
 
    
 
