@@ -27,7 +27,8 @@ SECRET_KEY = "django-insecure-6)v@v-n!y0rps5)2w++nqd2t2godi4%u^!8l7#3f_poiacjg)%
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
-ALLOWED_HOSTS = ["*"]
+#ALLOWED_HOSTS = ["*"]
+ALLOWED_HOSTS = ["http://localhost:5173","https://garden-energy.vercel.app"]
 
 REST_FRAMEWORK = {
     "DEFAULT_AUTHENTICATION_CLASSES": (
