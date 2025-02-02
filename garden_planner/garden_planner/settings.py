@@ -175,6 +175,7 @@ CORS_ALLOW_ALL_ORIGINS = True
 CORS_ALLOWS_CREDENTIALS = True 
 CORS_ALLOWED_ORIGINS = ["http://localhost:5173","https://garden-energy.vercel.app"]
 CORS_ALLOW_METHODS = ["DELETE","GET","OPTIONS","PATCH","POST","PUT"]
+
 #LOGOUT_REDIRECT_URL = 'login'  
 #LOGIN_URL = 'login'    
 
