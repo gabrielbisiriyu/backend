@@ -173,9 +173,9 @@ MEDIA_URL = "media/"
 # https://docs.djangoproject.com/en/5.1/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField" 
-CORS_ALLOW_ALL_ORIGINS = True
+#CORS_ALLOW_ALL_ORIGINS = True
 CORS_ALLOWS_CREDENTIALS = True 
-#CORS_ALLOWED_ORIGINS = ["http://localhost:5173","https://garden-energy.vercel.app"]
+CORS_ALLOWED_ORIGINS = ["http://localhost:5173","https://garden-energy.vercel.app"]
 CORS_ALLOW_METHODS = ["DELETE","GET","OPTIONS","PATCH","POST","PUT"]
 
 #LOGOUT_REDIRECT_URL = 'login'  
