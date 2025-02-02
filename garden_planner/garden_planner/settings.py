@@ -26,8 +26,15 @@ MEDIA_DIR = Path.joinpath(BASE_DIR,"media")
 SECRET_KEY = "django-insecure-6)v@v-n!y0rps5)2w++nqd2t2godi4%u^!8l7#3f_poiacjg)%"
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
-ALLOWED_HOSTS = ["*"]
+DEBUG = False 
+
+#ALLOWED_HOSTS = ["*"]
+#ALLOWED_HOSTS = ["http://localhost:5137","http://127.0.0.1:8000/","https://garden-energy.vercel.app"] 
+ALLOWED_HOSTS = [
+    '127.0.0.1',  # Your local address
+    'localhost',  # Localhost address
+    'garden-energy.vercel.app',  # The Vercel domain
+]
 
 REST_FRAMEWORK = {
     "DEFAULT_AUTHENTICATION_CLASSES": (
@@ -70,6 +77,7 @@ INSTALLED_APPS = [
 ]
 
 MIDDLEWARE = [
+    "corsheaders.middleware.CorsMiddleware",
     "django.middleware.security.SecurityMiddleware",
     "whitenoise.middleware.WhiteNoiseMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
@@ -78,7 +86,7 @@ MIDDLEWARE = [
     "django.contrib.auth.middleware.AuthenticationMiddleware",
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
-    "corsheaders.middleware.CorsMiddleware",
+
 
 ]
 
@@ -172,7 +180,8 @@ MEDIA_URL = "media/"
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField" 
 CORS_ALLOW_ALL_ORIGINS = True
-CORS_ALLOWS_CREDENTIALS = True
+CORS_ALLOW_CREDENTIALS = True
+
 #LOGOUT_REDIRECT_URL = 'login'  
 #LOGIN_URL = 'login'    
 

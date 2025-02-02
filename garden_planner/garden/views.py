@@ -22,6 +22,9 @@ class CreateUserView(generics.CreateAPIView):
     permission_classes = [AllowAny]   
 
 
+
+
+
 class LogoutView(APIView):
     """
     Logout View for Blacklisting the Refresh Token.
