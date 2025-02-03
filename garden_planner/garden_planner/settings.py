@@ -34,6 +34,7 @@ ALLOWED_HOSTS = [
     '127.0.0.1',  # Your local address
     'localhost',  # Localhost address
     'garden-energy.vercel.app',  # The Vercel domain
+    'garden-planner-yyug.onrender.com',  # Your Render domain
 ]
 
 REST_FRAMEWORK = {
