@@ -71,7 +71,7 @@ class GardenPlantSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = GardenPlant
-        fields = ['id', 'plant','plant_name', 'garden','garden_name', 'quantity', 'planting_date', 'watering_schedule']
+        fields = ['id', 'plant','plant_name', 'garden','garden_name', 'quantity','growth_stage', 'planting_date', 'watering_schedule']
 
     def get_watering_schedule(self, obj):
         schedule = WateringSchedule.objects.filter(garden_plant=obj).first()
