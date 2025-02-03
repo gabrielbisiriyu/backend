@@ -2,7 +2,7 @@ from django.shortcuts import render
 from django.contrib.auth.models import User 
 from .models import Plant, Garden, GardenPlant, WateringSchedule, Notification
 from rest_framework import generics, viewsets
-from .serializers import UserSerializer, PlantSerializer, GardenPlantSerializer, GardenSerializer, WateringScheduleSerializer
+from .serializers import UserSerializer, PlantSerializer, GardenPlantSerializer, GardenSerializer, WateringScheduleSerializer,UserProfileSerializer
 from rest_framework.permissions import IsAuthenticated, AllowAny 
 from rest_framework.response import Response
 from rest_framework.decorators import action
@@ -22,6 +22,13 @@ class CreateUserView(generics.CreateAPIView):
     permission_classes = [AllowAny]   
 
 
+
+class UserProfileView(generics.RetrieveAPIView):
+    serializer_class = UserProfileSerializer
+    permission_classes = [IsAuthenticated]  # Only authenticated users can access
+
+    def get_object(self):
+        return self.request.user  # Return the currently logged-in user
 
 
 

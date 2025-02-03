@@ -3,7 +3,7 @@ from django.urls import path, include
 from garden.views import CreateUserView
 from rest_framework_simplejwt.views import TokenObtainPairView, TokenRefreshView
 from django.contrib.auth import views as auth_views 
-from garden.views import PlantViewSet, GardenViewSet, GardenPlantViewSet, WateringScheduleViewSet,NotificationsAPIView, LogoutView
+from garden.views import PlantViewSet, GardenViewSet, GardenPlantViewSet, WateringScheduleViewSet,NotificationsAPIView, LogoutView,UserProfileView
 from rest_framework.routers import DefaultRouter  
 from django.conf import settings
 from django.conf.urls.static import static
@@ -27,6 +27,7 @@ urlpatterns = [
     #path("logout/", auth_views.LogoutView.as_view(), name="logout"),
     path("api/token/refresh/", TokenRefreshView.as_view(), name="refresh"),
     path("api-auth/", include("rest_framework.urls")),
+    path("api/profile/", UserProfileView.as_view(), name="user-profile"),    
     path("api/logout/", LogoutView.as_view(), name="logout"),
     path("api/notifications/", NotificationsAPIView.as_view(), name="notifications"),
     #path("api/garden-plants/<int:garden_plant_id>/complete-maintenance/", MaintenanceTaskCompletionView.as_view(), name="complete_maintenance"),

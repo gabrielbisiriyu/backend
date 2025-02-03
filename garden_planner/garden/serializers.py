@@ -37,6 +37,13 @@ class UserSerializer(serializers.ModelSerializer):
 
 
 
+class UserProfileSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = User
+        fields = ["username", "email"]  # Only include the username field
+
+
+
 class PlantSerializer(serializers.ModelSerializer):
     class Meta:
         model = Plant
