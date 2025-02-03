@@ -76,7 +76,7 @@ class GardenPlantSerializer(serializers.ModelSerializer):
     def get_watering_schedule(self, obj):
         schedule = WateringSchedule.objects.filter(garden_plant=obj).first()
         if schedule:
-            return {
+            return {  "id" : schedule.pk,
                 'next_watering_date': schedule.next_watering_date,
                 'frequency_in_days': schedule.frequency_in_days,
                 'last_watered_date': schedule.last_watered_date,
