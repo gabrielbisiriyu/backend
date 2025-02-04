@@ -62,6 +62,7 @@ SIMPLE_JWT = {
 # Application definition
 
 INSTALLED_APPS = [
+
     "django.contrib.admin",
     "django.contrib.auth",
     "django.contrib.contenttypes",
@@ -74,6 +75,8 @@ INSTALLED_APPS = [
     'django_filters',
     "celery",
     'rest_framework_simplejwt.token_blacklist',
+    'cloudinary_storage',
+    'cloudinary',
 
 ]
 
@@ -222,3 +225,11 @@ LOGGING = {
         },
     },
 }
+
+
+CLOUDINARY_STORAGE = {
+    'CLOUD_NAME': 'dxztixu1e',
+    'API_KEY': '232613257554264',
+    'API_SECRET': 'a2w71AK0zh-a9ZMhGNyx6XCNhsE',
+}
+DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
