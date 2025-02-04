@@ -8,7 +8,8 @@ class Plant(models.Model):
     name = models.CharField(max_length=200)
     plant_type = models.CharField(max_length=100)
     #image = models.ImageField(upload_to='plant_image/', null=True, blank=True)
-    image = CloudinaryField("images/",blank=True,null=True)
+    image = models.ImageField(upload_to='images',null=True,blank=True) # image    
+    #image = CloudinaryField("images/",blank=True,null=True)
     SUNLIGHT_CHOICES = [
         ('LOW', 'Low Light'),
         ('MEDIUM', 'Medium Light'),
