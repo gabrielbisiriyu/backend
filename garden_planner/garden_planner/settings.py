@@ -17,7 +17,12 @@ from decouple import config
 import os
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
-MEDIA_DIR = Path.joinpath(BASE_DIR,"media")
+MEDIA_DIR = Path.joinpath(BASE_DIR,"media")   
+
+#cloudinary imports
+import cloudinary
+import cloudinary.uploader
+import cloudinary.api
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/5.1/howto/deployment/checklist/
@@ -227,9 +232,18 @@ LOGGING = {
 }
 
 
-CLOUDINARY_STORAGE = {
-    'CLOUD_NAME': 'dxztixu1e',
-    'API_KEY': '232613257554264',
-    'API_SECRET': 'a2w71AK0zh-a9ZMhGNyx6XCNhsE',
-}
-DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
+
+#cloudninary-django integration
+cloudinary.config(
+    cloud_name =  'dxztixu1e',
+    api_key  = '232613257554264',
+    api_secret = 'a2w71AK0zh-a9ZMhGNyx6XCNhsE',
+)
+
+
+#CLOUDINARY_STORAGE = {
+#    'CLOUD_NAME': 'dxztixu1e',
+#    'API_KEY': '232613257554264',
+#    'API_SECRET': 'a2w71AK0zh-a9ZMhGNyx6XCNhsE',
+#}
+#DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
